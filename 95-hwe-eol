@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# this stamp is created and updated by /usr/lib/update-notifier/update-motd-hwe-eol
+stamp="/var/lib/update-notifier/hwe-eol"
+
+# do not try to refresh this more than once per day
+[ -z "$(find "$stamp" -newermt 'now-1 days' 2> /dev/null)" ] && exit 0
+
+if [ -x /usr/lib/update-notifier/update-motd-hwe-eol ]; then
+    exec /usr/lib/update-notifier/update-motd-hwe-eol
+fi

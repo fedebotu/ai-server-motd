@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# config
+max_usage=90
+bar_width=50
+# colors
+white="\e[39m"
+green="\e[1;32m"
+red="\e[1;31m"
+dim="\e[2m"
+undim="\e[0m"
+
+# GPU usage
+mapfile -t gpu_usage < <(nvidia-smi --query-gpu=name,utilization.gpu --format=csv,noheader)
+
+# VRAM usage
+mapfile -t vram_usage < <(nvidia-smi --query-gpu=name,utilization.memory,memory.used,memory.total --format=csv,noheader,nounits)
+
+gpu_count=${#gpu_usage[@]}
+
+printf "\nGPU usage:\n"
+
+
+for gpu_idx in $(seq 0 $((gpu_count - 1))); do
+    printf "GPU %d (%s):\n" "$gpu_idx" "$(echo "${gpu_usage[$gpu_idx]}" | awk -F',' '{print $1}')"
+    gpu_usage_percent=$(echo "${gpu_usage[$gpu_idx]}" | awk -F',' '{print $2}' | sed 's/%//')
+
+    # GPU utilization bar
+    gpu_used_width=$((gpu_usage_percent*bar_width/100))
+    if [ "${gpu_used_width}" -ge "${bar_width}" ]; then
+        gpu_used_width=${bar_width}
+    fi
+    if [ "${gpu_usage_percent}" -ge "${max_usage}" ]; then
+        gpu_color=$red
+    else
+        gpu_color=$green
+    fi
+    gpu_bar="[${gpu_color}"
+    for ((i=0; i<"$gpu_used_width"; i++)); do
+        gpu_bar+="="
+    done
+    gpu_bar+="${white}${dim}"
+    for ((i="$gpu_used_width"; i<"$bar_width"; i++)); do
+        gpu_bar+="="
+    done
+    gpu_bar+="${undim}]"
+
+    printf "  Utilization: %3s%%\n" "$gpu_usage_percent"
+    echo -e "${gpu_bar}" | sed -e 's/^/  /'
+
+    vram_usage_percent=$(echo "${vram_usage[$gpu_idx]}" | awk -F',' '{print $2}' | sed 's/%//')
+    vram_used=$(echo "${vram_usage[$gpu_idx]}" | awk -F',' '{print $3}' | sed 's/%//')
+    vram_total=$(echo "${vram_usage[$gpu_idx]}" | awk -F',' '{print $4}' | sed 's/%//')
+
+    # VRAM utilization bar
+    vram_used_width=$((vram_usage_percent*bar_width/100))
+    if [ "${vram_used_width}" -ge "${bar_width}" ]; then
+        vram_used_width=${bar_width}
+    fi
+    if [ "${vram_usage_percent}" -ge "${max_usage}" ]; then
+        gpu_color=$red
+    else
+        gpu_color=$green
+    fi
+    gpu_bar="[${gpu_color}"
+    for ((i=0; i<"$vram_used_width"; i++)); do
+        gpu_bar+="="
+    done
+    gpu_bar+="${white}${dim}"
+    for ((i="$vram_used_width"; i<"$bar_width"; i++)); do
+        gpu_bar+="="
+    done
+    gpu_bar+="${undim}]"
+
+    
+    printf "  VRAM usage: %4s / %4s MiB\n" "$vram_used" "$vram_total"
+    echo -e "${gpu_bar}" | sed -e 's/^/  /'
+
+
+done
