@@ -1,8 +1,3 @@
 #!/bin/bash
 
-export TERM=xterm-256color
-
-#/usr/bin/env figlet "$(hostname)" | /usr/bin/env lolcat -f
-# figlet "$(hostname)" | lolcat-c -f
-
-/usr/bin/env figlet "$(hostname)" | /usr/bin/env lolcat -f
+/usr/bin/env figlet "$(hostname)" | /snap/bin/lolcat-c -f
