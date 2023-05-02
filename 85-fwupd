@@ -1,5 +1,0 @@
-#!/bin/sh
-
-if [ -f /run/motd.d/85-fwupd ]; then
-        cat /run/motd.d/85-fwupd
-fi
