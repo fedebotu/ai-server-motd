@@ -1,6 +1,6 @@
 # AI Server MOTD (Message Of The Day)
 
-Show information about your AI/Deep Learning server in a nice format, including GPU utilization and VRAM usage~
+Show information about your AI/Deep Learning server in a nice format, including GPU utilization and VRAM usage 🚀
 
 ![235893377-a332234a-230b-42dd-aede-dd9f78018898 (2)](https://user-images.githubusercontent.com/48984123/235893948-2b259590-0a6d-49bb-9c7a-c2fb126e00f3.png)
 
@@ -8,7 +8,7 @@ Show information about your AI/Deep Learning server in a nice format, including 
 
 Clone the repository and cd into it
 ```bash
-https://github.com/fedebotu/ai-server-motd.git && cd ai-server-motd
+git clone https://github.com/fedebotu/ai-server-motd.git && cd ai-server-motd
 ```
 ### Displaying
 
