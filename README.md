@@ -40,10 +40,9 @@ To use the `10-hostname-color`, you may run the following on a Ubuntu server:
 ```bash
 sudo apt-get install update-motd
 sudo apt-get install -y figlet
-sudo snap install lolcat-c
+sudo apt-get install lolcat
 ```
-
-note that you need `snap` install with you can install with `sudo apt install snap`.
+Alternatively install `sudo snap install lolcat-c` - note that you need `snap` install with you can install with `sudo apt install snap`.
 
 ## Credits
 https://github.com/yboetz/motd
