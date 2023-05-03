@@ -1,4 +1,4 @@
-# AI Server MoTD (Message Of The Day)
+# AI Server MOTD (Message Of The Day)
 
 Show information about your AI/Deep Learning server in a nice format, including GPU utilization and VRAM usage~
 
