@@ -22,8 +22,7 @@ gpu_count=${#gpu_usage[@]}
 printf "\nGPU status:\n"
 
 # Print version
-echo "$W  $(nvidia-smi | grep "CUDA Version" | head -n 1 | cut -c 3- | rev | cut -c 3- | rev)"
-
+echo "$W  $(nvidia-smi | grep "CUDA Version" | head -n 1 | cut -c 37- | rev | cut -c 3- | rev)"
 
 for gpu_idx in $(seq 0 $((gpu_count - 1))); do
     gpu_name=$(echo "${gpu_usage[$gpu_idx]}" | awk -F',' '{print $1}')
